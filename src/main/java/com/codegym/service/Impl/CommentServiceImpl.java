@@ -68,13 +68,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void like(Comment comment) {
-        comment.setLikes(comment.getLikes() + 1);
-        saveComment(comment);
+        int likeNumber = comment.getLikes() + 1;
+        comment.setLikes(likeNumber);
+        commentRepository.save(comment);
     }
 
     @Override
     public void disLike(Comment comment) {
         comment.setLikes(comment.getLikes() - 1);
-        saveComment(comment);
+        commentRepository.save(comment);
     }
 }
