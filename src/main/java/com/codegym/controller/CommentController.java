@@ -12,23 +12,28 @@ import java.util.List;
 
 @Controller
 public class CommentController {
+    private static int daySelection = 0;
     @Autowired
     private CommentService commentService;
 
     @GetMapping("/start")
     public ModelAndView showHome() {
+        daySelection = 0;
         ModelAndView modelAndView = new ModelAndView("/home");
         Iterable<Comment> comments = commentService.allTodayComments();
         modelAndView.addObject("comments", comments);
         return modelAndView;
     }
+
     @GetMapping("/start/allComments")
     public ModelAndView showAllComment() {
+        daySelection = 1;
         ModelAndView modelAndView = new ModelAndView("/home");
         Iterable<Comment> comments = commentService.findAll();
         modelAndView.addObject("comments", comments);
         return modelAndView;
     }
+
     @GetMapping("/saveComment")
     public String addComment(Comment comment) {
         comment.setDate();
@@ -40,14 +45,20 @@ public class CommentController {
     public String like(@PathVariable Long id) {
         Comment comment = commentService.findById(id);
         commentService.like(comment);
-        return "redirect:/start";
+        if (daySelection == 0)
+            return "redirect:/start";
+        else
+            return "redirect:/start/allComments";
     }
 
     @GetMapping("/dislikeComment/{id}")
     public String dislike(@PathVariable Long id) {
         Comment comment = commentService.findById(id);
         commentService.disLike(comment);
-        return "redirect:/start";
+        if (daySelection == 0)
+            return "redirect:/start";
+        else
+            return "redirect:/start/allComments";
     }
 
 }
