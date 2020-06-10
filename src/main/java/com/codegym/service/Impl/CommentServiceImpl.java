@@ -72,12 +72,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Iterable<Comment> allTodayComments() {
-//        Iterable<Comment> allComment = commentRepository.findAll();
-
         String queryStr = "SELECT c FROM Comment AS c WHERE (c.date=CURRENT_DATE)";
         TypedQuery<Comment> query = entityManager.createQuery(queryStr, Comment.class);
         return query.getResultList();
-
     }
 
     @Override
