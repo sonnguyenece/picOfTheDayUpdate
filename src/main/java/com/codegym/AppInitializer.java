@@ -1,9 +1,11 @@
 package com.codegym;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-// đây là lớp  cấu hình khởi tạo cho ứng dụng, nó thay thế cho việc cấu hình bằng file web.xml nếu cấu hình bằng xml
-public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+import javax.servlet.Filter;
+
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{ApplicationConfig.class};
@@ -18,4 +20,13 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        return new Filter[]{filter};
+    }
+
 }

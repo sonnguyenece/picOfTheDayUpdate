@@ -1,11 +1,14 @@
 package com.codegym.controller;
 
+import com.codegym.exception.BadWordException;
 import com.codegym.model.Comment;
 import com.codegym.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -34,11 +37,17 @@ public class CommentController {
         return modelAndView;
     }
 
-    @GetMapping("/saveComment")
-    public String addComment(Comment comment) {
+    @PostMapping("/saveComment")
+    public String addComment(Comment comment) throws BadWordException {
         comment.setDate();
+        commentService.checkBadWord(comment);
         commentService.saveComment(comment);
         return "redirect:/start";
+    }
+
+    @ExceptionHandler(BadWordException.class)
+    public String showBadWordNotification() {
+        return "/badWord";
     }
 
     @GetMapping("/likeComment/{id}")

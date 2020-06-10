@@ -1,5 +1,6 @@
 package com.codegym.service;
 
+import com.codegym.exception.BadWordException;
 import com.codegym.model.Comment;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface CommentService {
     void like(Comment comment);
 
     void disLike(Comment comment);
+
+    void checkBadWord(Comment comment) throws BadWordException;
 }

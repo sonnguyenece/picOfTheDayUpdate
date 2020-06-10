@@ -1,6 +1,7 @@
 package com.codegym;
 
 
+import com.codegym.concern.Logger;
 import com.codegym.repository.CommentRepository;
 import com.codegym.service.CommentService;
 import com.codegym.service.impl.CommentServiceImpl;
@@ -11,6 +12,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -47,6 +49,7 @@ import java.util.Properties;
 @ComponentScan("com.codegym")
 @EnableJpaRepositories("com.codegym.repository")
 @EnableSpringDataWebSupport
+@EnableAspectJAutoProxy
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -66,7 +69,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-
+    @Bean
+    public Logger logger() {
+        return new Logger();
+    }
     //Cai dat formatter
 //    @Override
 //    public void addFormatters(FormatterRegistry registry) {

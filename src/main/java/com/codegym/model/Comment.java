@@ -3,10 +3,12 @@ package com.codegym.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Table
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,6 +17,7 @@ public class Comment {
     private String author;
     private String date;
     private int likes;
+
 
     public Comment() {
 
@@ -69,4 +72,5 @@ public class Comment {
     public void setLikes(int likes) {
         this.likes = likes;
     }
+
 }

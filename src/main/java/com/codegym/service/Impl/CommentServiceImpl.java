@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.exception.BadWordException;
 import com.codegym.model.Comment;
 import com.codegym.repository.CommentRepository;
 import com.codegym.service.CommentService;
@@ -12,13 +13,26 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommentServiceImpl implements CommentService {
 
-
+    private static List<String> badWordList;
     private static SessionFactory sessionFactory;
     private static EntityManager entityManager;
+
+    static {
+        badWordList = new ArrayList<String>();
+        badWordList.add("penis");
+        badWordList.add("vagina");
+        badWordList.add("pussy");
+        badWordList.add("bitch");
+        badWordList.add("nigger");
+        badWordList.add("mẹ");
+        badWordList.add("buồi");
+        badWordList.add("lồn");
+    }
 
     static {
         try {
@@ -77,5 +91,14 @@ public class CommentServiceImpl implements CommentService {
     public void disLike(Comment comment) {
         comment.setLikes(comment.getLikes() - 1);
         commentRepository.save(comment);
+    }
+
+    @Override
+    public void checkBadWord(Comment comment) throws BadWordException {
+        for (String word : badWordList) {
+            if (comment.getFeedback().toLowerCase().contains(word)) {
+                throw new BadWordException();
+            }
+        }
     }
 }
