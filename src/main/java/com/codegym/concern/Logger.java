@@ -28,7 +28,8 @@ public class Logger {
         for (Object signatureArg : signatureArgs) {
             Comment comment = (Comment) signatureArg;
             String time = java.time.LocalTime.now().toString();
-            System.out.println("Feedback:" + comment.getFeedback()
+            System.out.println("BAD WORD DETECTED"
+                    +"Feedback:" + comment.getFeedback()
                     + ". Author: " + comment.getAuthor()
                     + ". Date: " + comment.getDate()
                     +". Time: "+ time);
