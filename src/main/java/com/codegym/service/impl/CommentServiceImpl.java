@@ -3,6 +3,7 @@ package com.codegym.service.impl;
 import com.codegym.exception.BadWordException;
 import com.codegym.model.Comment;
 import com.codegym.repository.CommentRepository;
+import com.codegym.repository.CommentRepositoryQuery;
 import com.codegym.service.CommentService;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -34,21 +35,25 @@ public class CommentServiceImpl implements CommentService {
         badWordList.add("lồn");
     }
 
-    static {
-        try {
-            sessionFactory = new Configuration()
-                    .configure("hibernate.conf.xml")
-                    .buildSessionFactory();
-//            sessionFactory.close();
-            entityManager = sessionFactory.createEntityManager();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-    }
+//    static {
+//        try {
+//            sessionFactory = new Configuration()
+//                    .configure("hibernate.conf.xml")
+//                    .buildSessionFactory();
+////            sessionFactory.close();
+//            entityManager = sessionFactory.createEntityManager();
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private CommentRepositoryQuery commentRepositoryQuery;
+
 
     @Override
     public Iterable<Comment> findAll() {
@@ -72,9 +77,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Iterable<Comment> allTodayComments() {
-        String queryStr = "SELECT c FROM Comment AS c WHERE (c.date=CURRENT_DATE)";
-        TypedQuery<Comment> query = entityManager.createQuery(queryStr, Comment.class);
-        return query.getResultList();
+        return commentRepositoryQuery.allTodayComments();
     }
 
     @Override

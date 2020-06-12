@@ -3,6 +3,8 @@ package com.codegym;
 
 import com.codegym.concern.Logger;
 import com.codegym.repository.CommentRepository;
+import com.codegym.repository.CommentRepositoryQuery;
+import com.codegym.repository.impl.CommentRepositoryImpl;
 import com.codegym.service.CommentService;
 import com.codegym.service.impl.CommentServiceImpl;
 import org.springframework.beans.BeansException;
@@ -88,7 +90,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public CommentService commentService() {
         return new CommentServiceImpl();
     }
-
+    @Bean
+    public CommentRepositoryQuery commentRepository(){
+        return new CommentRepositoryImpl();
+    }
 
     //Thymeleaf Configuration
     @Bean

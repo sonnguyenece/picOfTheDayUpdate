@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 public class CommentController {
     private static int daySelection = 0;
+
     @Autowired
     private CommentService commentService;
 
